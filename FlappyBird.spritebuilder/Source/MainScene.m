@@ -64,29 +64,18 @@
     _clouds = @[_cloud1, _cloud2];
     _bushes = @[_bush1, _bush2];
     
-    for (CCNode *ground in _grounds) {
-        // set collision txpe
-        ground.physicsBody.collisionType = @"level";
-        ground.zOrder = DrawingOrderGround;
-    }
-    
-    // set this class as delegate
-    physicsNode.collisionDelegate = self;
-    
-    _obstacles = [NSMutableArray array];
-    points = 0;
-    _scoreLabel.visible = true;
-    
-    [super initialize];
-    
-
-    
     _parallaxBackground = [CCParallaxNode node];
     [_parallaxContainer addChild:_parallaxBackground];
     
     // Note that the bush ratio is larger than the cloud
     _bushParallaxRatio = ccp(0.9, 1);
     _cloudParallaxRatio = ccp(0.5, 1);
+    
+    for (CCNode *ground in _grounds) {
+        // set collision txpe
+        ground.physicsBody.collisionType = @"level";
+        ground.zOrder = DrawingOrderGround;
+    }
     
     for (CCNode *bush in _bushes) {
         CGPoint offset = bush.position;
@@ -99,6 +88,15 @@
         [self removeChild:cloud];
         [_parallaxBackground addChild:cloud z:0 parallaxRatio:_cloudParallaxRatio positionOffset:offset];
     }
+    
+    // set this class as delegate
+    physicsNode.collisionDelegate = self;
+    
+    _obstacles = [NSMutableArray array];
+    points = 0;
+    _scoreLabel.visible = true;
+    
+    [super initialize];
 }
 
 #pragma mark - Touch Handling
